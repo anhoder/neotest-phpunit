@@ -164,6 +164,7 @@ function NeotestAdapter.build_spec(args)
     logger.info("--filter position.name:", { position.name })
 
     script_args = vim.tbl_flatten({
+      user_args,
       script_args,
       filter_args,
     })
@@ -171,7 +172,6 @@ function NeotestAdapter.build_spec(args)
 
   local command = vim.tbl_flatten({
     program,
-    user_args,
     script_args,
   })
 
