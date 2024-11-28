@@ -147,6 +147,7 @@ function NeotestAdapter.build_spec(args)
   local position = args.tree:data()
   local results_path = async.fn.tempname()
   local program = config.get_phpunit_cmd()
+  local user_args = config.get_args()
 
   local script_args = {
     position.name ~= "tests" and position.path,
@@ -170,6 +171,7 @@ function NeotestAdapter.build_spec(args)
 
   local command = vim.tbl_flatten({
     program,
+    user_args,
     script_args,
   })
 
@@ -255,6 +257,13 @@ setmetatable(NeotestAdapter, {
     elseif type(opts.env) == "table" then
       config.get_env = function()
         return opts.env
+      end
+    end
+    if is_callable(opts.args) then
+      config.get_args = opts.args
+    elseif type(opts.args) == "table" then
+      config.get_args = function()
+        return opts.args
       end
     end
     if type(opts.dap) == "table" then

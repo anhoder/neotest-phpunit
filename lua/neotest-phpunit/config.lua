@@ -20,4 +20,8 @@ M.get_filter_dirs = function()
   return { ".git", "node_modules" }
 end
 
+M.get_args = function()
+  return {}
+end
+
 return M
